@@ -6,7 +6,7 @@ if __name__ == "__main__":
     raptors = []
     advanced = []
     recruits = []
-    with open('soccer_players.csv', newline='') as csvroster:
+    with open('soccer_players.csv', newline='') as csvroster, open('example.txt', 'w') as teamrosters:
         # Get players from csv file.
         rows = list(csv.DictReader(csvroster, delimiter=','))
         headings = rows[0]
@@ -30,7 +30,20 @@ if __name__ == "__main__":
                     sharks.append(recruits.pop())
                     dragons.append(recruits.pop())
                     raptors.append(recruits.pop())
-        print("Number of Sharks: {}".format(len(sharks)))
+        teamrosters.write("Sharks: \n {}".format(sharks))
+        # Unpack ordered maps, tuples/lists/etc to get to strings.
+        # Write ", "joined strings to our file.
+        # print(sharks)
+        # print("\n \n")
+        # print("Number of Raptors: {}".format(len(raptors)))
+        # print(raptors)
+        # print("\n \n")
+        # print("Number of Dragons: {}".format(len(dragons)))
+        # print(dragons)
+        if len(sharks) == len(raptors) and len(raptors) == len(dragons):
+            print("Next time, I can write these teams to teams.text!")
+        else:
+            print("Error: Uneven teams.")
     # 1. TRYHARD MODE:
     # Set league_type, U6, U8, U10, U12 or U13.
     # Set default value of league_type to U8 for this project.
@@ -50,7 +63,7 @@ if __name__ == "__main__":
     # Use loop to evenly pop experienced players into 3 team lists.
     # Use another loop to pop remainder of players into same 3 teams.
     
-    # with open('teams.txt', 'a') as teamrosters:
+    # with open('teams.txt', 'a') as teamrosters ( now included in line opening csv file):
         # fieldnames = ['get_these_from_roster']
         # teamrosters.write(csvfile, fieldnames=fieldnames)
 # else:
