@@ -9,7 +9,7 @@ if __name__ == "__main__":
     with open('soccer_players.csv', newline='') as csvroster, open('example.txt', 'w') as teamrosters:
         # Get players from csv file.
         rows = list(csv.DictReader(csvroster, delimiter=','))
-        # These ordered maps / lists / etc are a pain in my brain.
+        # These ordered maps are a pain in my brain.
         headings = rows[0]
         roster = rows[1:]
         for row in rows:
@@ -19,60 +19,65 @@ if __name__ == "__main__":
             else:
                 recruits.append(row)
                 # This part of my code does what I want it to do!
+        print(len(roster))
+        # print(advanced[0].popitem())
+        # def unpacker(player=None, height=None, exp=None, guard=None):
+        #    if player and guard:
+        #        return [player, height, exp, guard]
         
-        
-        while advanced or recruits:
-            """ Distribute players to actual teams. """
-            if advanced != []:
-                for row in advanced:
-                    for key, val in row:
-                        # This was my first attmept to turn ODs into plain lists.
-                        rowlist = []
-                        val[0], val[2], val[3] = advanced.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        sharks.append(rowlist)
+        # while advanced or recruits:
+        #    """ Distribute players to actual teams. """
+        #    if advanced != []:
+        #        rowlist = []
+        #        for row in advanced:
+        #            rowlist.append(unpacker(advanced[row]))
                         
-                        rowlist = []
-                        val[0], val[2], val[3] = advanced.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        dragonss.append(rowlist)
+            #            rowlist = []
+            #            val[0], val[2], val[3] = advanced.pop(0)
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            sharks.append(rowlist)
                         
-                        rowlist = []
-                        val[0], val[2], val[3] = advanced.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        raptors.append(rowlist)
+            #            rowlist = []
+            #            val[0], val[2], val[3] = advanced.pop()
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            dragonss.append(rowlist)
                         
-            elif recruits != []:
-                for row in recruits:
-                    for key, val in row:
-                        rowlist = []
-                        val[0], val[2], val[3] = recruits.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        sharks.append(rowlist)
+            #            rowlist = []
+            #            val[0], val[2], val[3] = advanced.pop()
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            raptors.append(rowlist)
                         
-                        rowlist = []
-                        val[0], val[2], val[3] = recruits.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        dragonss.append(rowlist)
+            # elif recruits != []:
+            #    for row in recruits:
+            #        for key, val in row:
+            #            rowlist = []
+            #            val[0], val[2], val[3] = recruits.pop()
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            sharks.append(rowlist)
                         
-                        rowlist = []
-                        val[0], val[2], val[3] = recruits.pop()
-                        rowlist.append(val[0])
-                        rowlist.append(val[2])
-                        rowlist.append(val[3])
-                        raptors.append(rowlist)
+            #            rowlist = []
+            #            val[0], val[2], val[3] = recruits.pop()
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            dragonss.append(rowlist)
+                        
+            #            rowlist = []
+            #            val[0], val[2], val[3] = recruits.pop()
+            #            rowlist.append(val[0])
+            #            rowlist.append(val[2])
+            #            rowlist.append(val[3])
+            #            raptors.append(rowlist)
                                             
-            print(sharks)
+            # print(sharks)
             # **Babylon 5 Narration voice**: It failed.
         # name, height, exp, rents = sharks
 
