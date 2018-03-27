@@ -1,108 +1,59 @@
 import csv
 
+sharks = []
+dragons = []
+raptors = []
+advanced = []
+recruits = []
+
+def unpacker(pre_rosters):
+    row_list = []
+    while len(row_list) < 4:
+        """ Unpack one player at a time into final team lists. """
+        row_list.append(pre_rosters[0]["Name"])        
+        row_list.append(pre_rosters[0]["Height (inches)"])        
+        row_list.append(pre_rosters[0]["Soccer Experience"])        
+        row_list.append(pre_rosters[0]["Guardian Name(s)"])
+    else:
+        pre_rosters.pop(0)
+        return row_list
+
 if __name__ == "__main__":
-    sharks = []
-    dragons = []
-    raptors = []
-    advanced = []
-    recruits = []
+
+
     with open('soccer_players.csv', newline='') as csvroster, open('example.txt', 'w') as teamrosters:
         # Get players from csv file.
-        rows = list(csv.DictReader(csvroster, delimiter=','))
+        roster = list(csv.DictReader(csvroster, delimiter=','))
         # These ordered maps are a pain in my brain.
-        headings = rows[0]
-        roster = rows[1:]
-        for row in rows:
+        for player in roster:
             # Seperate experienced players from beginners.
-            if row['Soccer Experience'] == 'YES':
-                advanced.append(row)
+            if player['Soccer Experience'] == 'YES':
+                advanced.append(player)
             else:
-                recruits.append(row)
+                recruits.append(player)
                 # This part of my code does what I want it to do!
-        print(len(roster))
-        # print(advanced[0].popitem())
-        # def unpacker(player=None, height=None, exp=None, guard=None):
-        #    if player and guard:
-        #        return [player, height, exp, guard]
-        
-        # while advanced or recruits:
-        #    """ Distribute players to actual teams. """
-        #    if advanced != []:
-        #        rowlist = []
-        #        for row in advanced:
-        #            rowlist.append(unpacker(advanced[row]))
-                        
-            #            rowlist = []
-            #            val[0], val[2], val[3] = advanced.pop(0)
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            sharks.append(rowlist)
-                        
-            #            rowlist = []
-            #            val[0], val[2], val[3] = advanced.pop()
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            dragonss.append(rowlist)
-                        
-            #            rowlist = []
-            #            val[0], val[2], val[3] = advanced.pop()
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            raptors.append(rowlist)
-                        
-            # elif recruits != []:
-            #    for row in recruits:
-            #        for key, val in row:
-            #            rowlist = []
-            #            val[0], val[2], val[3] = recruits.pop()
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            sharks.append(rowlist)
-                        
-            #            rowlist = []
-            #            val[0], val[2], val[3] = recruits.pop()
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            dragonss.append(rowlist)
-                        
-            #            rowlist = []
-            #            val[0], val[2], val[3] = recruits.pop()
-            #            rowlist.append(val[0])
-            #            rowlist.append(val[2])
-            #            rowlist.append(val[3])
-            #            raptors.append(rowlist)
-                                            
-            # print(sharks)
-            # **Babylon 5 Narration voice**: It failed.
-        # name, height, exp, rents = sharks
+
+        while advanced or recruits:
+            """ Distribute players to actual teams. """
+            if advanced != []:
+                sharks.append(unpacker(advanced))
+                dragons.append(unpacker(advanced))
+                raptors.append(unpacker(advanced))
+            elif recruits != []:
+                sharks.append(unpacker(recruits))
+                dragons.append(unpacker(recruits))
+                raptors.append(unpacker(recruits))
+            # Everything's lists now.  No dicts.  Almost there?
 
         
-
-        # teamrosters.write("Sharks: \n {}".format(sharks))
-        # Unpack ordered maps, tuples/lists/etc to get to strings.
-        # Write ", "joined strings to our file.
-        # print(sharks)
-        # print("\n \n")
-        # print("Number of Raptors: {}".format(len(raptors)))
-        # print(raptors)
-        # print("\n \n")
-        # print("Number of Dragons: {}".format(len(dragons)))
-        # print(dragons)
-        # if len(sharks) == len(raptors) and len(raptors) == len(dragons):
-        #    print("Next time, I can write these teams to teams.text!")
-        # else:
-        #    print("Error: Uneven teams.")
-    # 1. TRYHARD MODE:
-    # Set league_type, U6, U8, U10, U12 or U13.
-    # Set default value of league_type to U8 for this project.
-    # For a U8 class league_type, have lbp calc how many experienced players can be distributed to the available number of teams of the specific size.
-    # Also, try to evenly distribute shorter players to each team as well.
-
+        
+        if len(sharks) == len(raptors) and len(raptors) == len(dragons):
+            print("Time to write txt files!")
+            # write(this that and the other thing)
+        else:
+            print("Error: Uneven teams.")
+    # 1. TRYHARD MODE: (let's just write the extra credit letters and ditch the league types and heights business.  Classes will likely come into play in project 2 anyway. 
+    # EC: Create welcome letter text files to each of the 18 students indicating which team they're on etc.
     # 2. ACTUAL ASSIGNMENT:
     # In the list of teams include the team name on one line, followed by a separate line for each player. Include the player's name, whether the player has experience playing soccer, and the player's guardian names. Separate each bit of player information by a comma. For example, the text file might start something like this:
      
