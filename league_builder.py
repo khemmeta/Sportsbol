@@ -12,7 +12,6 @@ def unpacker(pre_rosters):
 
 def string_list(team):
     """Prepare team strings for final roster."""
-    # This code may get heavier dealing with ordered dicts.
     player_string = ''
     for player in team:        
         del player["Height (inches)"]
@@ -48,7 +47,6 @@ def acceptance_letters(team, team_string):
         print("{} acceptance letters written.".format(team_string))
     
 if __name__ == "__main__":
-    # Nothing below will run when file is imported.
     with open('soccer_players.csv', newline='') as csvroster:
         roster = list(csv.DictReader(csvroster, delimiter=','))
         
@@ -60,8 +58,7 @@ if __name__ == "__main__":
             recruits.append(player)            
             
     while advanced or recruits:
-        # Distribute players to actual teams.
-        
+        # Distribute players to teams.        
         if advanced != []:
             # Seperate advanced players to each team until we run out.
             sharks.append(unpacker(advanced))
