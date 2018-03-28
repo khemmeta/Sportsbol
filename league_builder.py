@@ -8,25 +8,34 @@ recruits = []
 
 def unpacker(pre_rosters):
     """Unpack one player at a time into final team lists."""
-    row_list = []
-    while len(row_list) < 4:
-        row_list.append(pre_rosters[0]["Name"])        
-        row_list.append(pre_rosters[0]["Height (inches)"])        
-        row_list.append(pre_rosters[0]["Soccer Experience"])        
-        row_list.append(pre_rosters[0]["Guardian Name(s)"])
-    else:
-        pre_rosters.pop(0)
-        return row_list
+    return pre_rosters.pop(0)
+#    row_list = []
+#    while len(row_list) < 4:
+#        row_list.append(pre_rosters[0]["Name"])        
+#        row_list.append(pre_rosters[0]["Height (inches)"])        
+#        row_list.append(pre_rosters[0]["Soccer Experience"])        
+#        row_list.append(pre_rosters[0]["Guardian Name(s)"])
+#    else:
+#        pre_rosters.pop(0)
+#        return row_list
 
 def string_list(team):
     """Prepare team strings for final roster."""
+    # This code may get heavier dealing with ordered dicts.
     player_string = ''
     for player in team:        
-        del player[1]
+        del player["Height (inches)"]
         player_string += str(player)
+        player_string = player_string.replace("OrderedDict", "")
+        player_string = player_string.replace(')', '')
+        player_string = player_string.replace('(', '')
         player_string = player_string.replace('[', '')
         player_string = player_string.replace(']', '')
         player_string = player_string.replace("'", "")
+        player_string = player_string.replace('Guardian Names, ', '')
+        player_string = player_string.replace('Name, ', '')
+        player_string = player_string.replace('Soccer Experience, ', '')
+
         player_string += '\n'        
     player_string += '\n'
     return player_string
@@ -34,14 +43,15 @@ def string_list(team):
 def acceptance_letters(team, team_string):
     """Write acceptance letters to parents."""
     for player in team:
-        file_name = str(player[0].replace(' ', '_'))
+        file_name = str(player['Name'].replace(' ', '_'))
         file_name += '.txt'
+        # letter_string can theoretically be written in external .txt file.
         letter_string = """Dear {}, \n
-    Congratulations!  {} has been accepted into the {} family! 
+    Congratulations!  Your athlete, {}, has been accepted into the {} family! 
 First practice session is on Friday at 5pm.  We recommend you arrive 15 minutes early.
 We look forward to seeing you on our fields.  Enjoy your year! \n
     Sincerely,
-        Khem Myrick, League Coordinator""".format(player[3], player[0], team_string)
+        Khem Myrick, League Coordinator""".format(player['Guardian Name(s)'], player['Name'], team_string)
         with open(file_name, 'w') as welcome_letter:
             welcome_letter.write(letter_string)
     print("{} acceptance letters written.".format(team_string))
@@ -54,13 +64,15 @@ if __name__ == "__main__":
     for player in roster:
         # Seperate experienced players from beginners.
         if player['Soccer Experience'] == 'YES':
-            advanced.append(player)
+            advanced.append(player)            
         else:
             recruits.append(player)
             # The above block of code was an early success in this process.
-
+            
+            
     while advanced or recruits:
         # Distribute players to actual teams.
+        
         if advanced != []:
             # Seperate advanced players 1 by 1 to each team until we run out.
             sharks.append(unpacker(advanced))
@@ -78,7 +90,7 @@ if __name__ == "__main__":
         acceptance_letters(sharks, 'Sharks')
         acceptance_letters(raptors, 'Raptors')
         acceptance_letters(dragons, 'Dragons')        
-        with open('teams.txt', 'a') as teamrosters:
+        with open('teams.txt', 'w') as teamrosters:
             # Write final roster.
             teamrosters.write("Sharks \n")
             teamrosters.write(string_list(sharks))
