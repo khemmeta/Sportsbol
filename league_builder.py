@@ -9,15 +9,6 @@ recruits = []
 def unpacker(pre_rosters):
     """Unpack one player at a time into final team lists."""
     return pre_rosters.pop(0)
-#    row_list = []
-#    while len(row_list) < 4:
-#        row_list.append(pre_rosters[0]["Name"])        
-#        row_list.append(pre_rosters[0]["Height (inches)"])        
-#        row_list.append(pre_rosters[0]["Soccer Experience"])        
-#        row_list.append(pre_rosters[0]["Guardian Name(s)"])
-#    else:
-#        pre_rosters.pop(0)
-#        return row_list
 
 def string_list(team):
     """Prepare team strings for final roster."""
@@ -34,7 +25,8 @@ def string_list(team):
         player_string = player_string.replace("'", "")
         player_string = player_string.replace('Guardian Names, ', '')
         player_string = player_string.replace('Name, ', '')
-        player_string = player_string.replace('Soccer Experience, ', '')
+        player_string = player_string.replace('Soccer Experience, ',
+                                              '')
 
         player_string += '\n'        
     player_string += '\n'
@@ -45,8 +37,8 @@ def acceptance_letters(team, team_string):
     with open('letter.txt') as letter_temp:
         for player in team:
             file_name = str(player['Name'].replace(' ', '_'))
+            file_name = file_name.lower()
             file_name += '.txt'
-            # letter_string has successfully been outsourced to external .txt file.
             letter_temp.seek(0)
             letter_string = letter_temp.read().format(player['Guardian Name(s)'], 
                                                       player['Name'], 
@@ -65,27 +57,25 @@ if __name__ == "__main__":
         if player['Soccer Experience'] == 'YES':
             advanced.append(player)            
         else:
-            recruits.append(player)
-            # The above block of code was an early success in this process.
-            
+            recruits.append(player)            
             
     while advanced or recruits:
         # Distribute players to actual teams.
         
         if advanced != []:
-            # Seperate advanced players 1 by 1 to each team until we run out.
+            # Seperate advanced players to each team until we run out.
             sharks.append(unpacker(advanced))
             dragons.append(unpacker(advanced))
             raptors.append(unpacker(advanced))
         elif recruits != []:
             # After we run out of advanced players,
-            # seperate novice players 1 by 1 to each team until we run out.
+            # seperate novice players to each team until we run out.
             sharks.append(unpacker(recruits))
             dragons.append(unpacker(recruits))
             raptors.append(unpacker(recruits))
 
     if len(sharks) == len(raptors) and len(raptors) == len(dragons):
-        # If all teams have equal number of players, write acceptance letters.
+        # If all teams have equal number of players, write letters.
         acceptance_letters(sharks, 'Sharks')
         acceptance_letters(raptors, 'Raptors')
         acceptance_letters(dragons, 'Dragons')        
