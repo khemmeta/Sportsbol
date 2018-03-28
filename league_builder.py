@@ -42,19 +42,18 @@ def string_list(team):
         
 def acceptance_letters(team, team_string):
     """Write acceptance letters to parents."""
-    for player in team:
-        file_name = str(player['Name'].replace(' ', '_'))
-        file_name += '.txt'
-        # letter_string can theoretically be written in external .txt file.
-        letter_string = """Dear {}, \n
-    Congratulations!  Your athlete, {}, has been accepted into the {} family! 
-First practice session is on Friday at 5pm.  We recommend you arrive 15 minutes early.
-We look forward to seeing you on our fields.  Enjoy your year! \n
-    Sincerely,
-        Khem Myrick, League Coordinator""".format(player['Guardian Name(s)'], player['Name'], team_string)
-        with open(file_name, 'w') as welcome_letter:
-            welcome_letter.write(letter_string)
-    print("{} acceptance letters written.".format(team_string))
+    with open('letter.txt') as letter_temp:
+        for player in team:
+            file_name = str(player['Name'].replace(' ', '_'))
+            file_name += '.txt'
+            # letter_string has successfully been outsourced to external .txt file.
+            letter_temp.seek(0)
+            letter_string = letter_temp.read().format(player['Guardian Name(s)'], 
+                                                      player['Name'], 
+                                                      team_string)
+            with open(file_name, 'w') as welcome_letter:
+                welcome_letter.write(letter_string)
+        print("{} acceptance letters written.".format(team_string))
     
 if __name__ == "__main__":
     # Nothing below will run when file is imported.
